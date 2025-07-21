@@ -30,6 +30,7 @@ namespace RBACSystem.Infrastructure.Extensions
             services.AddScoped<IJwtTokenService, JwtTokenService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDashboardService, DashboardService>();
+            services.AddScoped<IRoleService, RoleService>();
 
 
 
