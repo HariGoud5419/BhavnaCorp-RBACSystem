@@ -1,6 +1,7 @@
 using RBACSystem.Infrastructure.Extensions;
 using Microsoft.OpenApi.Models;
 using RBACSystem.Core.Interfaces;
+using RBACSystem.Core.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,12 @@ builder.Services.AddSwaggerGen(options =>
     // options.AddSecurityDefinition(...)
     // options.AddSecurityRequirement(...)
 });
+
+// registering JWT Settings 
+builder.Services.Configure<JwtSettings>(
+    builder.Configuration.GetSection("JwtSettings")
+);
+
 
 // Add API Explorer for Swagger
 builder.Services.AddEndpointsApiExplorer();
