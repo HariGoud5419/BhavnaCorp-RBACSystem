@@ -26,6 +26,9 @@ namespace RBACSystem.Infrastructure.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IApplicationDbSeeder, ApplicationDbSeeder>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IJwtTokenService, JwtTokenService>();
+
 
             return services;
         }
