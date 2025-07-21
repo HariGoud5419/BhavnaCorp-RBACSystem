@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace RBACSystem.Core.Entities
 {
     /// <summary>
-    /// Join table representing the many-to-many relationship between Employees and Roles.
+    /// Join table representing the many-to-many relationship between User and Roles.
     /// Supports role assignment metadata.
     /// </summary>
     public class UserRole
