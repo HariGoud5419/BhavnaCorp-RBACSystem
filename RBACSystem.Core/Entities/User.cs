@@ -32,6 +32,6 @@ namespace RBACSystem.Core.Entities
         /// <summary>
         /// Navigation: Roles assigned to this user.
         /// </summary>
-        public ICollection<UserRole>? UserRoles { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; } = [];
     }
 }
