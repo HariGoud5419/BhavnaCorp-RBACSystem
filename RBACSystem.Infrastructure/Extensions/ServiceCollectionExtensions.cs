@@ -5,6 +5,7 @@ using RBACSystem.Infrastructure.Data;
 using RBACSystem.Core.Interfaces;
 using RBACSystem.Infrastructure.Repositories;
 using RBACSystem.Infrastructure.UnitOfWork;
+using RBACSystem.Infrastructure.Services;
 
 namespace RBACSystem.Infrastructure.Extensions
 {
@@ -24,6 +25,7 @@ namespace RBACSystem.Infrastructure.Extensions
             services.AddScoped<IUnitOfWork, RBACSystem.Infrastructure.UnitOfWork.UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IApplicationDbSeeder, ApplicationDbSeeder>();
 
             return services;
         }

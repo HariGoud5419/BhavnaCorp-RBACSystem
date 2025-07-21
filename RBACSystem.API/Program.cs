@@ -1,5 +1,6 @@
 using RBACSystem.Infrastructure.Extensions;
 using Microsoft.OpenApi.Models;
+using RBACSystem.Core.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,4 +44,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<IApplicationDbSeeder>();
+    await seeder.SeedAsync();
+}
+
 app.Run();

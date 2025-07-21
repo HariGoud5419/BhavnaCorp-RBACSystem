@@ -6,10 +6,10 @@ namespace RBACSystem.Core.Enums
     /// </summary>
     public enum UserRoleType
     {
-        Admin = 0,
-        Manager = 1,
-        Viewer = 2,
-        Editor = 3,
-        Others = 4,
+        Admin = 1,
+        Manager = 2,
+        Viewer = 3,
+        Editor = 4,
+        Others = 5,
     }
 }
