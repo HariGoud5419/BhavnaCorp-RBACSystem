@@ -28,6 +28,7 @@ namespace RBACSystem.Infrastructure.Extensions
             services.AddScoped<IApplicationDbSeeder, ApplicationDbSeeder>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IJwtTokenService, JwtTokenService>();
+            services.AddScoped<IUserService, UserService>();
 
 
             return services;
