@@ -1,16 +1,24 @@
 <nav class="dashboard-nav">
-  <ul class="dashboard-menu">
-    <li>
-      <a routerLink="/dashboard/admin" routerLinkActive="active">Admin</a>
-    </li>
-    <li>
-      <a routerLink="/dashboard/editor" routerLinkActive="active">Editor</a>
-    </li>
-    <li>
-      <a routerLink="/dashboard/viewer" routerLinkActive="active">Viewer</a>
-    </li>
-  </ul>
+  <div class="dashboard-header">
+    <ul class="dashboard-menu">
+      @if (authService.hasRole('Admin')) {
+      <li>
+        <a routerLink="/dashboard/admin" routerLinkActive="active">Admin</a>
+      </li>
+      } @if (authService.hasRole('Editor')) {
+      <li>
+        <a routerLink="/dashboard/editor" routerLinkActive="active">Editor</a>
+      </li>
+      } @if (authService.hasRole('Viewer')) {
+      <li>
+        <a routerLink="/dashboard/viewer" routerLinkActive="active">Viewer</a>
+      </li>
+      }
+    </ul>
+
+    <!-- Logout Button -->
+    <button (click)="onLogout()" class="logout-btn">Logout</button>
+  </div>
 </nav>
 
-<!-- Nested routes go here -->
 <router-outlet></router-outlet>

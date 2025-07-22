@@ -5,6 +5,7 @@ import { DashboardHomeComponent } from '../../app/dashboard/dashboard-home/dashb
 import { AdminComponent } from './admin/admin';
 import { EditorComponent } from './editor/editor';
 import { ViewerComponent } from './viewer/viewer';
+import { RoleGuard } from '../auth/guards/role.guard';
 // Future: Add AdminGuard, EditorGuard, ViewerGuard here
 
 /**
@@ -23,14 +24,20 @@ export const routes: Routes = [
       {
         path: 'admin',
         component: AdminComponent,
+        canActivate: [RoleGuard],
+        data: { roles: ['Admin'] },
       },
       {
         path: 'editor',
         component: EditorComponent,
+        canActivate: [RoleGuard],
+        data: { roles: ['Editor'] },
       },
       {
         path: 'viewer',
         component: ViewerComponent,
+        canActivate: [RoleGuard],
+        data: { roles: ['Viewer'] },
       },
     ],
   },

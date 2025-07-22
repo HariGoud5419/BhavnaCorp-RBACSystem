@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { LoginRequestDto } from '../auth/models/login-request-dto';
 import { LoginResponseDto } from '../auth/models/login-response-dto';
+import { AuthUtils } from './services/auth-utils';
 
 /**
  * AuthService handles all authentication-related HTTP operations.
@@ -25,6 +26,12 @@ export class AuthService {
       .pipe(catchError(this.handleError));
   }
 
+  // logout functionality
+  logout(): void {
+    localStorage.removeItem('token'); // Remove token
+    // Optionally clear more session data if you stored user context
+  }
+
   /**
    * Centralized error handler for HTTP requests.
    */
@@ -32,5 +39,13 @@ export class AuthService {
     const errorMsg =
       error.error?.message || 'Login failed. Please try again later.';
     return throwError(() => new Error(errorMsg));
+  }
+
+  // Check whether the user has role or not
+  hasRole(role: string): boolean {
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+    const roles = AuthUtils.getUserRoles(token);
+    return roles.includes(role);
   }
 }

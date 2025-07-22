@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using RBACSystem.Core.DTOs.Auth;
+using RBACSystem.Core.Entities;
 using RBACSystem.Core.Interfaces;
+using RBACSystem.Core.Utilities;
 
 namespace RBACSystem.API.Controllers
 {
@@ -40,5 +42,30 @@ namespace RBACSystem.API.Controllers
 
             return Ok(response);
         }
+
+        /// <summary>
+        /// Handles authentication-related endpoints like login and registration.
+        /// </summary>
+        [HttpPost("register")]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Register([FromBody] RegisterUserDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ApiResponse<string>.Failure("Invalid input."));
+
+            // Map DTO to Entity
+            var user = new User
+            {
+                Username = dto.Username,
+                Email = dto.Email,
+                PasswordHash = dto.Password // will be hashed in service
+            };
+
+            await _authService.RegisterUserAsync(user, dto.Roles);
+
+            return CreatedAtAction(nameof(Register), ApiResponse<string>.SuccessResponse("User registered successfully."));
+        }
+
     }
 }

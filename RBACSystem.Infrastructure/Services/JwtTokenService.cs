@@ -33,7 +33,7 @@ namespace RBACSystem.Infrastructure.Services
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()), // subject
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(ClaimTypes.Name, user.Username),
+                new Claim("name", user.Username), //Custom Name Claim
             };
 
             // Add role claims
@@ -42,7 +42,7 @@ namespace RBACSystem.Infrastructure.Services
                 claims.AddRange(
                     user.UserRoles
                         .Where(ur => ur.IsActive)
-                        .Select(ur => new Claim(ClaimTypes.Role, ur.Role.Name))
+                        .Select(ur => new Claim("role", ur.Role.Name))
                 );
             }
 

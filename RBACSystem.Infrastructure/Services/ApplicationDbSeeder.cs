@@ -44,6 +44,8 @@ namespace RBACSystem.Infrastructure.Services
             if (!await _context.Users.AnyAsync())
             {
                 var adminRole = await _context.Roles.FirstAsync(r => r.RoleType == UserRoleType.Admin);
+                var editorRole = await _context.Roles.FirstAsync(r => r.Name == "Editor");
+                var viewerRole = await _context.Roles.FirstAsync(r => r.Name == "Viewer");
 
                 var adminUser = new User
                 {
@@ -63,7 +65,44 @@ namespace RBACSystem.Infrastructure.Services
                         }
                 ];
 
-                _context.Users.Add(adminUser);
+                // Seed default editor user 
+                var editorUser = new User
+                {
+                    Username = "editor",
+                    Email = "editor@rbac.com",
+                    PasswordHash = HashPassword("Editor@123")
+                };
+                editorUser.UserRoles = [
+                        new UserRole
+                        {
+                            User = editorUser,
+                            Role = editorRole,
+                            RoleId = editorRole.Id,
+                            AssignedDate = DateTime.UtcNow,
+                            IsActive = true
+                        }
+                ];
+
+                // Seed default viewer user 
+
+                var viewerUser = new User
+                {
+                    Username = "viewer",
+                    Email = "viewer@rbac.com",
+                    PasswordHash = HashPassword("Viewer@123")
+                };
+                viewerUser.UserRoles = [
+                        new UserRole
+                        {
+                            User = viewerUser,
+                            Role = viewerRole,
+                            RoleId = viewerRole.Id,
+                            AssignedDate = DateTime.UtcNow,
+                            IsActive = true
+                        }
+                ];
+
+                _context.Users.AddRange(adminUser, editorUser, viewerUser);
                 await _context.SaveChangesAsync();
             }
         }
