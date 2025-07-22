@@ -11,11 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Registering Cors
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.AllowAnyOrigin()
+        policy.WithOrigins("http://localhost:4200") // your Angular dev server
+              .AllowAnyHeader()
               .AllowAnyMethod()
-              .AllowAnyHeader();
+              .AllowCredentials(); // if needed
     });
 });
 
@@ -91,7 +92,7 @@ builder.Services.AddEndpointsApiExplorer();
 var app = builder.Build();
 
 // use Cors 
-app.UseCors("AllowAll");
+app.UseCors("AllowFrontend");
 
 // Use Swagger only in Development
 if (app.Environment.IsDevelopment())

@@ -1,0 +1,46 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <h2 class="login-title">Secure Login</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Enter your email"
+        />
+        @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched)
+        {
+        <p class="error-text">Please enter a valid email.</p>
+        }
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password"
+        />
+        @if (loginForm.get('password')?.invalid &&
+        loginForm.get('password')?.touched) {
+        <p class="error-text">Password is required.</p>
+        }
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" [disabled]="loginForm.invalid" class="login-button">
+        Login
+      </button>
+
+      @if (loginError) {
+      <div class="error-text">{{ loginError }}</div>
+      }
+    </form>
+  </div>
+</div>
