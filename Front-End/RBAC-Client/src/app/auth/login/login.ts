@@ -49,8 +49,20 @@ export class LoginComponent {
           console.log('Login Success:', response);
           //using this for the assignment purpose as we are used JWT bearer auth from headers)
           localStorage.setItem('token', response.token); // storing JWT token
-          // TODO: Redirect or set user context
-          this.router.navigate(['/dashboard']); // Redirect to dashboard
+
+          // Read roles from response (assuming they exist)
+          const roles = response.roles || [];
+
+          // Navigate to appropriate dashboard page
+          if (roles.includes('Admin')) {
+            this.router.navigate(['/dashboard/admin']);
+          } else if (roles.includes('Editor')) {
+            this.router.navigate(['/dashboard/editor']);
+          } else if (roles.includes('Viewer')) {
+            this.router.navigate(['/dashboard/viewer']);
+          } else {
+            this.router.navigate(['/dashboard']); // fallback
+          }
         },
         error: (err) => {
           console.error('Login Error:', err.message);
